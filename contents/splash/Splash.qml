@@ -62,15 +62,24 @@ Rectangle {
 
         AnimatedImage {
             id: face
-            source: "images/fish.gif"
+            source: "images/rumi.gif"
             paused: false
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            width:  imageSource.sizeAnim - 2
-            height: imageSource.sizeAnim - 2
+            anchors.centerIn: parent
             smooth: true
             visible: true
-         }
+
+            // Preserve aspect ratio relative to parent
+            fillMode: Image.PreserveAspectFit
+
+            // Scale down within the container
+            width: imageSource.sizeAnim - 2
+            height: imageSource.sizeAnim - 2
+            onFrameChanged: {
+                if (frame == frameCount - 1) {
+                    paused = true   // stop after 1 loop
+                }
+            }
+        }
     }
 
        Image {
